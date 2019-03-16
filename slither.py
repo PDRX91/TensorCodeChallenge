@@ -17,7 +17,7 @@ path = ''
 
 def slither(mystring):
 	grid[0][0]=1
-	grid[4][4]=2
+	grid[4][4]=0
 	currentX = 0
 	currentY = 0
 	possible_moves={
@@ -31,44 +31,69 @@ def slither(mystring):
 	global path
 
 	def add_confirmed_directions(direction):
-		# print(direction)
+		print(direction)
 		global testX
 		global testY
 		global path
-		if testX == 4 and testY == 4:
+		if grid[4][4] == 1:
 			return
-		testX += possible_moves[direction][0]
-		testY += possible_moves[direction][1]
+		nextX = testX + possible_moves[direction][0]
+		nextY = testY + possible_moves[direction][1]
+		if grid[nextX][nextY] == 0:
+			if 4 >= nextX >= 0 and 4 >= nextY >= 0:
+				testX = nextX
+				testY = nextY
+				grid[testX][testY]=1
+		print("testX: "+str(testX) +" testY: " +str(testY))
 		path += direction
 
 	def question_mark_check():
+		#attempting to call test all the different versions of the rest of the string
 		global testX
 		global testY
 		global path
-		if testX == 4 and testY == 4:
+		global grid
+		if grid[4][4] == 1:
 			return
 		for move in possible_moves:
 			add_test_direction(move)
-		if mystring[letter + 1] =='?':
-			question_mark_check()
+		# if mystring[letter + 1] =='?':
+		# 	question_mark_check()
 
 	def add_test_direction(direction):
 		global testX
 		global testY
 		global path
-		if testX == 4 and testY == 4:
+		global grid
+		#win condition
+		if grid[4][4] == 1:
 			return
-		testX += possible_moves[direction][0]
-		testY += possible_moves[direction][1]
+		nextX = testX + possible_moves[direction][0]
+		nextY = testY + possible_moves[direction][1]
+		#making sure the square hasnt been visited yet
+		if grid[nextX][nextY] == 0:
+			# making sure the next square isnt outside the boundaries of the grid
+			if 4 >= nextX >= 0 and 4 >= nextY >= 0:
+				#if it is safe, set the next spot traveled
+				testX = nextX
+				testY = nextY
+				grid[testX][testY]=1
+		print("testX: "+str(testX) +" testY: " +str(testY))
 		path += direction
 
+	#current issue is that when I get to a ? believe im iterating
+	#through all the options for that ? in one go before moving to the next letter
 	for letter in range(len(mystring)-1):
-
 		if mystring[letter] == '?':
 			question_mark_check()
 		else:
 			add_confirmed_directions(mystring[letter])
 	print(path)
+	print(grid[0])
+	print(grid[1])
+	print(grid[2])
+	print(grid[3])
+	print(grid[4])
 
 
 

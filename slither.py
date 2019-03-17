@@ -6,6 +6,8 @@
 	# [0,0,0,0,0],
 	# [0,0,0,0,1],
 #]
+
+
 grid = [[0 for col in range(5)] for row in range(5)]
 
 test1 = 'r?d?drdd' #Expected result: rrdrdrdd
@@ -97,8 +99,14 @@ def slither(mystring):
 
 
 
+import boto3
+s3 = boto3.resource('s3')
+bucket = s3.Bucket('tensorchallenge')
+for obj in bucket.objects.all():
+	key = obj.key
+	body = obj.get()['Body'].read()
+	print(body)
 
-
-slither(test1)
+# slither(test1)
 # slither(test2)
 # slither(test3)

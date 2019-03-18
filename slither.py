@@ -32,23 +32,6 @@ def slither(mystring):
 	global testY
 	global path
 
-	def add_confirmed_directions(direction):
-		print(direction)
-		global testX
-		global testY
-		global path
-		if grid[4][4] == 1:
-			return
-		nextX = testX + possible_moves[direction][0]
-		nextY = testY + possible_moves[direction][1]
-		if grid[nextX][nextY] == 0:
-			if 4 >= nextX >= 0 and 4 >= nextY >= 0:
-				testX = nextX
-				testY = nextY
-				grid[testX][testY]=1
-		print("testX: "+str(testX) +" testY: " +str(testY))
-		path += direction
-
 	def question_mark_check():
 		#attempting to call test all the different versions of the rest of the string
 		global testX
@@ -89,7 +72,7 @@ def slither(mystring):
 		if mystring[letter] == '?':
 			question_mark_check()
 		else:
-			add_confirmed_directions(mystring[letter])
+			add_test_direction(mystring[letter])
 	print(path)
 	print(grid[0])
 	print(grid[1])
@@ -100,10 +83,9 @@ def slither(mystring):
 
 
 import boto3
-import botocore
 
-BUCKET_NAME = 'tensorchallenge' # replace with your bucket name
-KEY = 'slitherTest.py' # replace with your object key
+BUCKET_NAME = 'tensorchallenge'
+KEY = 'slitherTest.py'
 
 s3 = boto3.resource('s3')
 
@@ -111,5 +93,5 @@ s3.Bucket(BUCKET_NAME).download_file(KEY, 'slitherTest.py')
 
 import slitherTest
 slither(slitherTest.test1)
-# slither(test2)
-# slither(test3)
+# slither(slitherTest.test2)
+# slither(slitherTest.test3)

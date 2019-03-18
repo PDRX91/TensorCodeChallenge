@@ -100,13 +100,16 @@ def slither(mystring):
 
 
 import boto3
-s3 = boto3.resource('s3')
-bucket = s3.Bucket('tensorchallenge')
-for obj in bucket.objects.all():
-	key = obj.key
-	body = obj.get()['Body'].read()
-	print(body)
+import botocore
 
-# slither(test1)
+BUCKET_NAME = 'tensorchallenge' # replace with your bucket name
+KEY = 'slitherTest.py' # replace with your object key
+
+s3 = boto3.resource('s3')
+
+s3.Bucket(BUCKET_NAME).download_file(KEY, 'slitherTest.py')
+
+import slitherTest
+slither(slitherTest.test1)
 # slither(test2)
 # slither(test3)

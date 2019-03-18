@@ -13,24 +13,16 @@ def slither(mystring):
 	testY = 0
 	path = ''
 	grid[0][0]=1
-	# grid[4][4]=0
-	# currentX = 0
-	# currentY = 0
+
 	possible_moves={
 		'r':(0,1),
 		'l':(0,-1),
 		'u':(-1,0),
 		'd':(1,0)
 	}
-	# global testX
-	# global testY
-	# global path
 
 	def question_mark_check():
 		#attempting to call test all the different versions of the rest of the string
-		# nonlocal testX
-		# nonlocal testY
-		# nonlocal path
 		nonlocal grid
 		if grid[4][4] == 1:
 			return

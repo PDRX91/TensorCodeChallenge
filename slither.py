@@ -1,16 +1,21 @@
 #Tech challenge
-#[
-	# [1,0,0,0,0],
-	# [0,0,0,0,0],
-	# [0,0,0,0,0],
-	# [0,0,0,0,0],
-	# [0,0,0,0,1],
-#]
+
+# grid = [
+# 	[1,0,0,0,0],
+# 	[0,0,0,0,0],
+# 	[0,0,0,0,0],
+# 	[0,0,0,0,0],
+# 	[0,0,0,0,0],
+# ]
 
 def slither(mystring):
+	#dynamically creating the grid in the function
 	grid = [[0 for col in range(5)] for row in range(5)]
+
+	#test coordinates
 	testX = 0
 	testY = 0
+	#returned string
 	path = ''
 	grid[0][0]=1
 
@@ -21,7 +26,7 @@ def slither(mystring):
 		'd':(1,0)
 	}
 
-	def question_mark_check():
+	def question_mark_simulation():
 		#attempting to call test all the different versions of the rest of the string
 		nonlocal grid
 		if grid[4][4] == 1:
@@ -29,14 +34,37 @@ def slither(mystring):
 		for move in possible_moves:
 			add_test_direction(move)
 		# if mystring[letter + 1] =='?':
-		# 	question_mark_check()
+		# 	question_mark_simulation()
+
+	def confirmed_direction(direction):
+		nonlocal possible_moves
+		nonlocal testX
+		nonlocal testY
+		nonlocal path
+		nonlocal grid
+
+		xDelta = possible_moves[letter][0] #the change in coordinates to the next move
+		yDelta = possible_moves[letter][1]
+
+		#check if move is in the confines of the grid
+		if 0 <= (testX + xDelta) <= 4 and 0 <= (testY + yDelta) <= 4:
+			#check if the future space is already occupied
+			if grid[testX + xDelta][testY + yDelta] != 1:
+				#move to that coordinate
+				testX += xDelta
+				testY += yDelta
+				#mark grid at coordinate
+				grid[testX][testY] = 1
+				#add direction to path
+				path += direction
+		return
 
 	def add_test_direction(direction):
 		nonlocal testX
 		nonlocal testY
 		nonlocal path
 		nonlocal grid
-		#win condition
+		#win condition check
 		if grid[4][4] == 1:
 			return
 		nextX = testX + possible_moves[direction][0]
@@ -60,9 +88,10 @@ def slither(mystring):
 	#through all the options for that ? in one go before moving to the next letter
 	for letter in mystring:
 		if letter == '?':
-			question_mark_check()
+			question_mark_simulation()
 		else:
-			add_test_direction(letter)
+			# add_test_direction(letter)
+			confirmed_direction(letter)
 	print(path)
 	print(grid[0])
 	print(grid[1])
@@ -83,5 +112,5 @@ s3.Bucket(BUCKET_NAME).download_file(KEY, 'slitherTest.py')
 
 import slitherTest
 slither(slitherTest.test1) #Expected result: rrdrdrdd
-# slither(slitherTest.test2)
-# slither(slitherTest.test3)
+slither(slitherTest.test2)
+slither(slitherTest.test3)

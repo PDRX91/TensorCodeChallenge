@@ -58,11 +58,11 @@ def slither(mystring):
 
 	#current issue is that when I get to a ? believe im iterating
 	#through all the options for that ? in one go before moving to the next letter
-	for letter in range(len(mystring)-1):
-		if mystring[letter] == '?':
+	for letter in mystring:
+		if letter == '?':
 			question_mark_check()
 		else:
-			add_test_direction(mystring[letter])
+			add_test_direction(letter)
 	print(path)
 	print(grid[0])
 	print(grid[1])
@@ -82,6 +82,6 @@ s3 = boto3.resource('s3')
 s3.Bucket(BUCKET_NAME).download_file(KEY, 'slitherTest.py')
 
 import slitherTest
-slither(slitherTest.test1)
+slither(slitherTest.test1) #Expected result: rrdrdrdd
 # slither(slitherTest.test2)
 # slither(slitherTest.test3)

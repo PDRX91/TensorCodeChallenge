@@ -64,7 +64,7 @@ def slither(mystring):
 		nonlocal testY
 		nonlocal path
 		nonlocal grid
-		#win condition
+		#win condition check
 		if grid[4][4] == 1:
 			return
 		nextX = testX + possible_moves[direction][0]
